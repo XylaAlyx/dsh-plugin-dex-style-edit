@@ -1,0 +1,14 @@
+# Generated archives and local install artifacts.
+*.tgz
+
+# Dependencies, if anyone installs this package in place.
+node_modules/
+
+# Editors and OS noise.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# DSH change-ledger state this plugin's sibling tooling may create.
+.dsh-rewindignore

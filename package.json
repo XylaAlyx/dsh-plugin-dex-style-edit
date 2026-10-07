@@ -1,0 +1,57 @@
+{
+  "name": "dsh-plugin-dex-style-edit",
+  "version": "0.1.0",
+  "description": "Edit an already-sent user message in a DeepSeek Harness conversation and continue from that point as a new branch.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test tests/resolve.test.mjs",
+    "selfcheck": "node scripts/selfcheck.mjs",
+    "preflight": "node scripts/preflight.mjs",
+    "prepack": "node scripts/selfcheck.mjs && node --test tests/resolve.test.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "fork",
+    "branch",
+    "edit-message"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XylaAlyx/dsh-plugin-dex-style-edit.git"
+  },
+  "homepage": "https://github.com/XylaAlyx/dsh-plugin-dex-style-edit#readme",
+  "bugs": {
+    "url": "https://github.com/XylaAlyx/dsh-plugin-dex-style-edit/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

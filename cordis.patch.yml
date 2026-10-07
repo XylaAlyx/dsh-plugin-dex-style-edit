@@ -1,0 +1,10 @@
+# Mount dsh-plugin-dex-style-edit into a DSH profile.
+#
+# The insert id matches the package name, which is what the loader keys the row
+# by. Keeping the three identities identical (package name, this id, and the
+# browser bundle's `__ModuleLoader__.load({ id })`) is what the marketplace
+# preflight compares: a mismatch in the browser half is silent, and the plugin
+# looks installed while doing nothing.
+- insert:
+    - id: dsh-plugin-dex-style-edit
+      name: dsh-plugin-dex-style-edit
