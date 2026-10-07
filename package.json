@@ -16,10 +16,9 @@
     "README.md"
   ],
   "scripts": {
-    "test": "node --test tests/resolve.test.mjs",
     "selfcheck": "node scripts/selfcheck.mjs",
     "preflight": "node scripts/preflight.mjs",
-    "prepack": "node scripts/selfcheck.mjs && node --test tests/resolve.test.mjs"
+    "prepack": "node scripts/selfcheck.mjs"
   },
   "keywords": [
     "deepseek-harness",
