@@ -25,7 +25,22 @@ DSH 的会话日志是**只追加**的，持久层明文写着 *Committed events
 
 ## 安装
 
-插件是一个标准 DSH Profile Bundle。装进某个 profile 需要三步（本仓库已按此装进 `desktop` profile）：
+## 安装
+
+```sh
+# 从 GitHub 安装（走 git，目标机器需要装 git）
+dsh plugin --profile desktop add github:XylaAlyx/dsh-plugin-dex-style-edit
+
+# 不走 git 的等价方式（走 HTTPS 打包下载）
+dsh plugin --profile desktop add https://codeload.github.com/XylaAlyx/dsh-plugin-dex-style-edit/tar.gz/HEAD
+```
+
+装完**必须重启 DSH**（原因见下）。
+
+<details>
+<summary>本地开发安装（不走 GitHub）</summary>
+
+插件是一个标准 DSH Profile Bundle，手工装进某个 profile 也是三步：
 
 ```powershell
 # 1. 让包能被 profile 解析到
@@ -40,7 +55,9 @@ New-Item -ItemType Junction `
 
 第 3 步是 `cordis.patch.yml`：本包自带的 patch 会把插件挂进 Loader，**不需要**手改 profile 的 patch。
 
-> 等价做法：`dsh plugin --profile desktop add <本目录绝对路径>`（本机 `dsh` 不在 PATH，所以上面用的是手工等价步骤）。
+等价做法是 `dsh plugin --profile desktop add <本目录绝对路径>` 或 `link:<本目录绝对路径>`。
+
+</details>
 
 ### 必须重启 DSH
 
