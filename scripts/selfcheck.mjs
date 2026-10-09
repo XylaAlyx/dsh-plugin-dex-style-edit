@@ -191,6 +191,34 @@ if (fs.existsSync(clientEntry)) {
     /archiveSession\(sessionId, \{ stopActivity: false \}\)/u.test(clientSource),
     'the replaced session must be archived with stopActivity: false',
   )
+
+  // Sending from the composer's model. The ordering is the whole point: an Agent
+  // resolves its model once per request, so a write that lands after the prompt
+  // silently applies to the *next* turn instead of the edited message.
+  check(
+    'client',
+    /'remote',\s*'remote\.session'/u.test(clientSource),
+    'the model-selection endpoint lives on remote.session, which must be injected',
+  )
+  check(
+    'client',
+    /remote\.session\.selectModel\(\{/u.test(clientSource),
+    'the composer\'s pending model must be applied to the fork',
+  )
+  check(
+    'client',
+    /projections[\s\S]{0,80}\.get\?\.\('modelSelection'\)/u.test(clientSource),
+    'the pending choice must be read from the modelSelection projection',
+  )
+  const readAt = clientSource.indexOf('pendingModelChoice(ctx, sessionId)')
+  const writeAt = clientSource.indexOf('applyModelChoice(ctx, childId, modelChoice)')
+  const sendAt = clientSource.indexOf('await sendToFork(binding, nextText)')
+  check('client', readAt !== -1 && writeAt !== -1 && sendAt !== -1, 'the model handoff is not wired into the edit flow')
+  check(
+    'client',
+    readAt !== -1 && writeAt !== -1 && sendAt !== -1 && readAt < writeAt && writeAt < sendAt,
+    'the model must be read before the fork and applied before the prompt, or it misses the edited message',
+  )
   check(
     'client',
     /state\.byId\[sessionId\]\?\.parentId/u.test(clientSource),
