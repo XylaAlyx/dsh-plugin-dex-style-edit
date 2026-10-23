@@ -119,6 +119,11 @@ New-Item -ItemType Junction `
   只能自己实现。外观照抄官方的 CSS 模块（`MessageItem.module.css` / `MessageIconActions.module.css`），
   设计 token 全部核对过确实存在于 DSH 主题中；图标复用
   `@deepseek-ai/dsh-client-ui-primitives` 的 `IconEditOutlineRegular` 等。
+- **文本渲染走官方工厂槽位**：气泡正文不再调 `projectUserText`（该原语在
+  `0.2.1-rc.2-linuxbuild.4` 已被移除，继续调会在渲染期抛 `TypeError: projectUserText is not a
+  function`，气泡整个渲染不出来、铅笔自然也不出现）。改为委托官方工厂槽位
+  `conversation.user.text`（引用／技能／密钥的纯文本规则和行内渲染器都归它管），
+  槽位拿不到时退回 `UserTextRun` 纯文本兜底。`renderFactorySlot` 是 keyed 节点渲染器的标准入参。
 - **fork + 发送 + 归档**：`ctx.sessions.fork({ sessionId, atSeq, increaseTitle: true })` →
   `ctx.uiWorkspace.openSession(childId)` → 轮询拿到 `ctx.sessions.binding(childId)` →
   `binding.session.prompt([{ type: 'text', text }], 'queue')` →
